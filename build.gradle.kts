@@ -33,7 +33,7 @@ allprojects {
                 username = user
                 password = pwd
             }
-            url = uri("http://192.168.1.254:8080/nexus/repository/maven2-group/")
+            url = uri("http://172.16.11.231:8081/nexus/repository/maven2-group/")
         }
     }
 
@@ -45,6 +45,9 @@ allprojects {
     )
 
     dependencies {
+        implementation("org.springframework.boot:spring-boot-configuration-processor")
+        implementation("org.springframework.boot:spring-boot-starter-logging")
+        implementation("org.springframework.boot:spring-boot-autoconfigure")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
