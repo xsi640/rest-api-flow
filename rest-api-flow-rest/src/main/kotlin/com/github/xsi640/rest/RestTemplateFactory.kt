@@ -23,7 +23,9 @@ class RestTemplateFactoryImpl : RestTemplateFactory {
     @Autowired
     private lateinit var restRepositoryConfigFactory: RestRepositoryConfigFactory
 
-    private val restTemplateMap = ConcurrentHashMap<String, RestTemplate>()
+    companion object {
+        private val restTemplateMap = ConcurrentHashMap<String, RestTemplate>()
+    }
 
     override fun create(name: String): RestTemplate {
         restTemplateMap.computeIfAbsent(name) {

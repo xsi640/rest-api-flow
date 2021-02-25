@@ -13,23 +13,23 @@ import java.lang.reflect.Field
 import java.net.URL
 import kotlin.reflect.KClass
 
-class ResponseType(
-    val returnClass: KClass<*>,
-    val javaType: JavaType,
-    val field: Field
-)
+class ResponseType {
+    lateinit var returnClass: KClass<*>
+    var javaType: JavaType? = null
+    var field: Field? = null
+}
 
 class RequestHandler {
     var name: String = ""
     var host: String = ""
     var path: String = ""
         private set
-    var method: HttpMethod? = null
+    var method: HttpMethod = HttpMethod.GET
     var mediaType: MediaType? = null
     var parameters = mutableListOf<RequestParameter>()
         private set
     var userParameters = mutableListOf<UserRequestParameter>()
-    var responseType: ResponseType? = null
+    lateinit var responseType: ResponseType
 
     fun appendPath(path: String) {
         if (path.isEmpty())
@@ -122,7 +122,7 @@ class RequestHandler {
         return headers
     }
 
-    fun extractCookie(args: Array<Any>) {
+    fun extractCookie(args: Array<Any>): List<HttpCookie> {
         val cookies = mutableListOf<HttpCookie>()
         this.parameters.filter { it.type == ParameterType.COOKIE }.forEach { p ->
             if (p.name.isNotEmpty())
@@ -140,6 +140,7 @@ class RequestHandler {
                 }
             }
         }
+        return cookies
     }
 
     fun extractUrlParameters(args: Array<Any>): LinkedMultiValueMap<String, String> {
@@ -203,6 +204,15 @@ class RequestHandler {
         return result
     }
 
-    fun extractBody(args: Array<Any>) {
+    fun extractBody(args: Array<Any>): Any? {
+        var index = -1
+        this.userParameters.forEachIndexed { i, p ->
+            if (p.type == ParameterType.BODY) {
+                index = i
+            }
+        }
+        if (index == -1)
+            return null
+        return args[index]
     }
 }

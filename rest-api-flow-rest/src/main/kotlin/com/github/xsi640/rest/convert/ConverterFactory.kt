@@ -13,7 +13,9 @@ interface ConverterFactory {
 
 @Component
 class ConverterFactoryImpl : ConverterFactory {
-    private val converterMap = ConcurrentHashMap<String, MutableMap<KClass<*>, Convert<*>>>()
+    companion object {
+        private val converterMap = ConcurrentHashMap<String, MutableMap<KClass<*>, Convert<*>>>()
+    }
 
     override fun get(name: String, clazz: KClass<*>): Convert<*>? {
         val key = if (name.isEmpty()) {

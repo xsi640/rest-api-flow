@@ -7,17 +7,17 @@ import org.springframework.http.client.ClientHttpRequestInterceptor
 import kotlin.reflect.KClass
 
 class RestRepositoryConfig {
-    val name = DEFAULT_NAME
-    val interceptors = lazy { mutableListOf<ClientHttpRequestInterceptor>() }
-    val trace = true
-    val connectTimeout = 30000
-    val readTimeout = 120000
-    val followRedirects = true
-    val host = ""
-    val converters = lazy { mutableListOf<KClass<Convert<*>>>() }
-    val superClass: KClass<*>? = null
-    val superField = ""
-    val advices = lazy { mutableListOf<KClass<ResponseAdvice<*>>>() }
+    var name = DEFAULT_NAME
+    var interceptors = lazy { mutableListOf<ClientHttpRequestInterceptor>() }
+    var trace = true
+    var connectTimeout = 30000
+    var readTimeout = 120000
+    var followRedirects = true
+    var host = ""
+    var converters = lazy { mutableListOf<KClass<Convert<*>>>() }
+    var superClass: KClass<*> = Unit::class
+    var superField = ""
+    var advices = lazy { mutableListOf<KClass<ResponseAdvice<*>>>() }
 
     fun copyTo(): RestRepositoryConfig {
         val result = RestRepositoryConfig()

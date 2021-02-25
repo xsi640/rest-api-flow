@@ -1,6 +1,7 @@
 package com.github.xsi640.rest
 
 import com.github.xsi640.rest.config.RestRepositoryConfigFactory
+import com.github.xsi640.rest.requesthandler.RequestHandlerBuilder
 import org.springframework.beans.factory.FactoryBean
 import org.springframework.beans.factory.annotation.Autowired
 import java.lang.reflect.Proxy
